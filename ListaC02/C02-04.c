@@ -1,0 +1,16 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(){
+
+    float n;
+
+    printf( "\ndigite um valor: ");
+    scanf( "%f", &n );
+
+    if( n>=0 ){
+        printf( "\n%f", sqrt( n ) );
+        printf( "\n%f", n*n );
+    }
+
+}
