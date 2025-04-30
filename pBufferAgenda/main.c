@@ -121,6 +121,7 @@ void* apagar( void* pBuffer, char nome[10] ){
             }
 
             *(int*)pBuffer = *(int*)pBuffer - 1;
+            pBuffer = realloc( pBuffer, sizeof( int ) + PESSOA * ( *(int*)pBuffer )  );
             return pBuffer;
 
         } else{
