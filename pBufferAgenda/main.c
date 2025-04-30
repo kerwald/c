@@ -105,8 +105,8 @@ void* apagar( void* pBuffer, char nome[10] ){
                 }
                 *(char*)pv = '\0';
 
-                trocav = troca + sizeof(char)*10;
-                pv = p + sizeof(char)*10;
+                trocav = troca + NOME;
+                pv = p + NOME;
 
                 *(int*)pv = *(int*)trocav;
     
