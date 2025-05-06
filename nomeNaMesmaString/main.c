@@ -2,70 +2,86 @@
 #include<stdlib.h>
 #include<string.h>
 
-char* adicionarNome( char* lista );
-char* removerNome( char* lista );
+char* AdicionarNome( char* lista );
+char* RemoverNome( char* lista );
 
 int main(){
-    char* lista = malloc(sizeof(char));
+    char* lista = malloc( sizeof( char ) );
     lista[0] = '\0';
     int valor = 0;
-    while( valor != 4){
-        printf("digite um valor:\n adicionar nome: 1\n remover nome: 2\n listar: 3\n sair: 4\n");
+    while ( valor != 4 ){
+        printf( "digite um valor:\n adicionar nome: 1\n remover nome: 2\n listar: 3\n sair: 4\n" );
         scanf( "%d", &valor );
-        if( valor == 1 ){
-            lista = adicionarNome( lista );
+        if ( valor == 1 ){
+            lista = AdicionarNome( lista );
             valor = 0;
         }
-        if( valor == 2 ){
-            lista = removerNome( lista );
+        if ( valor == 2 ){
+            lista = RemoverNome( lista );
             valor = 0;
         }
-        if( valor == 3 ){
+        if ( valor == 3 ){
             printf( "%s", lista );
             printf("\n");
             valor = 0;
         }
-        if( valor == 4 ){
-            free(lista);
+        if ( valor == 4 ){
+            free( lista );
         }
     }
 
 }
 
-char* adicionarNome( char* lista ){
+/*
+==========================================================
+AdicionarNome
+
+Adiciona um nome a uma lista de nomes
+==========================================================
+*/
+
+char* AdicionarNome( char* lista ){
     char nome[30];
 
-    printf("digite o nome: ");  
-    scanf("%s", nome );
+    printf( "digite o nome: " );  
+    scanf( "%s", nome );
 
-    int tamatual = strlen(lista) + 1;
-    int tam = tamatual + strlen(nome);
-    lista = realloc( lista, sizeof(char) * tam );
+    int tamanhoAtual = strlen( lista ) + 1;
+    int tamanho = tamanhoAtual + strlen( nome );
+    lista = realloc( lista, sizeof( char ) * tamanho );
     strcat( lista, nome );
-    printf(" nome adicionado a lista ");  
+    printf( " nome adicionado a lista " );  
     return lista;
 }
 
-char* removerNome( char* lista ){
+/*
+==========================================================
+RemoverNome
+
+Remove nome de uma lista de nomes
+==========================================================
+*/
+
+char* RemoverNome( char* lista ){
     char nome[30];
     int cont = 0;
     int index = 0;
-    printf("digite o nome: ");  
-    scanf("%s", nome );
+    printf( "digite o nome: " );  
+    scanf( "%s", nome );
 
-    int tamatual = strlen(lista) + 1;
-    int tam = tamatual - strlen(nome);
-    char* vet = malloc( sizeof(char)* tam );
+    int tamanhoAtual = strlen( lista ) + 1;
+    int tam = tamanhoAtual - strlen( nome );
+    char* vet = malloc( sizeof( char )* tam );
     
-    for( int i=0; i<strlen(lista); i++ ){
-        if( lista[i] == nome[0] ){
+    for ( int i = 0; i < strlen( lista ); i++ ){
+        if ( lista[i] == nome[0] ){
             cont = 0;
-            for( int j=0; j<strlen(nome); j++ ){
-                if( (i+j) < strlen(lista) && lista[i+j] == nome[j] ){
+            for ( int j = 0; j < strlen( nome ); j++ ){
+                if ( ( i + j ) < strlen( lista ) && lista[ i + j ] == nome[j] ){
                     cont++;
                 }
             }
-            if( cont == strlen(nome) ){
+            if ( cont == strlen( nome ) ){
                 index = i;
             }
         }
@@ -73,8 +89,8 @@ char* removerNome( char* lista ){
 
     int j=0;
 
-    for( int i=0; i<strlen(lista); i++ ){
-        if( i < index || i>( index + strlen(nome)-1  ) ){
+    for ( int i=0; i<strlen( lista ); i++ ){
+        if ( i < index || i > ( index + strlen( nome ) - 1  ) ){
             vet[j] = lista[i];
             j++;
         }
@@ -82,7 +98,7 @@ char* removerNome( char* lista ){
     vet[j] = '\0';
 
 
-    free(lista);
+    free( lista );
     return vet;
 
 }
