@@ -7,50 +7,58 @@
 #define IDADE ( sizeof( int ) )
 #define TELEFONE ( sizeof( int ) )
 
-void* incluir( void* pBuffer, char nome[10], int idade, int telefone );
-void* apagar( void* pBuffer, char nome[10] );
-void buscar( void* pBuffer, char nome[10] );
-void listar( void* pBuffer );
+void* Incluir( void* pBuffer, const char nome[10], const int idade, const int telefone );
+void* Apagar( void* pBuffer, const char nome[10] );
+void Buscar( const void* pBuffer, const char nome[10] );
+void Listar( const void* pBuffer );
 
 int main(){
 
     void* pBuffer = NULL;
 
-    pBuffer = incluir( pBuffer, "felipe", 22, 999674323 );
+    pBuffer = Incluir( pBuffer, "felipe", 22, 999674323 );
 
-    pBuffer = incluir( pBuffer, "joao", 19, 999674521 );
+    pBuffer = Incluir( pBuffer, "joao", 19, 999674521 );
 
-    pBuffer = incluir( pBuffer, "ricardo", 12, 998765425 );
+    pBuffer = Incluir( pBuffer, "ricardo", 12, 998765425 );
 
-    pBuffer = incluir( pBuffer, "roberto", 34, 991402222 );
+    pBuffer = Incluir( pBuffer, "roberto", 34, 991402222 );
 
-    pBuffer = apagar( pBuffer, "felipe" );
+    pBuffer = Apagar( pBuffer, "felipe" );
 
-    pBuffer = incluir( pBuffer, "lucas", 22, 999674323 );
+    pBuffer = Incluir( pBuffer, "lucas", 22, 999674323 );
 
-    pBuffer = incluir( pBuffer, "cristian", 19, 999674521 );
+    pBuffer = Incluir( pBuffer, "cristian", 19, 999674521 );
 
-    pBuffer = incluir( pBuffer, "tubarao", 12, 998765425 );
+    pBuffer = Incluir( pBuffer, "tubarao", 12, 998765425 );
 
-    pBuffer = incluir( pBuffer, "vaitepega", 34, 991402222 );
+    pBuffer = Incluir( pBuffer, "vaitepega", 34, 991402222 );
 
-    pBuffer = apagar( pBuffer, "ricardo" );
+    pBuffer = Apagar( pBuffer, "ricardo" );
 
-    pBuffer = apagar( pBuffer, "tubarao" );
+    pBuffer = Apagar( pBuffer, "tubarao" );
  
 
-    listar( pBuffer );
+    Listar( pBuffer );
 
-    buscar(pBuffer, "joao");
-    buscar(pBuffer, "ivete");
+    Buscar( pBuffer, "joao" );
+    Buscar( pBuffer, "ivete" );
 
-    free(pBuffer);
+    free( pBuffer );
 
 }
 
-void* incluir( void* pBuffer, char nome[10], int idade, int telefone ){
+/*
+==========================================================
+Incluir
 
-    if( pBuffer == NULL ){
+Adiciona uma nova pessoa a agenda.
+==========================================================
+*/
+
+void* Incluir( void* pBuffer, const char nome[10], const int idade, const int telefone ){
+
+    if ( pBuffer == NULL ){
         pBuffer = (void*) malloc( sizeof( int ) + PESSOA );
         *(int *)pBuffer = 1;
 
@@ -63,7 +71,7 @@ void* incluir( void* pBuffer, char nome[10], int idade, int telefone ){
 
     void* p = pBuffer;
     p = p + sizeof( int ) + *(int*)pBuffer * PESSOA - PESSOA ; 
-    for( int i=0; i<strlen( nome ); i++ ){
+    for ( int i=0; i<strlen( nome ); i++ ){
         *(char*)p = nome[i];
         (char*)p++;
     }
@@ -78,27 +86,35 @@ void* incluir( void* pBuffer, char nome[10], int idade, int telefone ){
 
 }
 
-void* apagar( void* pBuffer, char nome[10] ){
+/*
+==========================================================
+Apagar
+
+remover uma pessoa da agenda.
+==========================================================
+*/
+
+void* Apagar( void* pBuffer, const char nome[10] ){
 
     void* p = pBuffer;
     void* troca = pBuffer;
-    int var = *(int*)pBuffer;
+    int numPessoas = *(int*)pBuffer;
 
     p = p + sizeof(int);
     troca = troca + sizeof(int);
 
-    for( int i=1; i<= var; i++){
+    for ( int i=1; i<= numPessoas; i++ ){
 
-        if( strcmp( (char*)p, nome ) == 0) {
+        if ( strcmp( (char*)p, nome ) == 0) {
 
             troca = troca + PESSOA;
 
-            for( int j=i; j<= var ; j++ ){
+            for ( int j=i; j<= numPessoas ; j++ ){
 
                 void* trocav = troca;
                 void* pv = p;
 
-                for( int k=1; k < NOME; k++ ){
+                for ( int k=1; k < NOME; k++ ){
                     *(char*)pv = *(char*)trocav;
                     (char*)pv++;
                     (char*)trocav++;
@@ -124,7 +140,7 @@ void* apagar( void* pBuffer, char nome[10] ){
             pBuffer = realloc( pBuffer, sizeof( int ) + PESSOA * ( *(int*)pBuffer )  );
             return pBuffer;
 
-        } else{
+        } else {
             p = p + PESSOA;
             troca = troca + PESSOA;
         }
@@ -135,33 +151,49 @@ void* apagar( void* pBuffer, char nome[10] ){
 
 }
 
-void listar( void* pBuffer ){
+/*
+==========================================================
+Listar
+
+Imprimir todas as pessoas da agenda.
+==========================================================
+*/
+
+void Listar( const void* pBuffer ){
 
     void* p = pBuffer + sizeof(int) ;
     
-    for( int i=0; i<*(int*)pBuffer; i++ ){
+    for ( int i=0; i<*(int*)pBuffer; i++ ){
 
-        printf("%s\n", (char*)p);
+        printf( "%s\n", (char*)p );
         p = p + NOME;
 
-        printf("%d\n", *(int*)p);
+        printf( "%d\n", *(int*)p );
         p = p + IDADE;
 
-        printf("%d\n", *(int*)p);
+        printf( "%d\n", *(int*)p );
         p = p + TELEFONE;
 
     }
 }
 
-void buscar( void* pBuffer, char nome[10] ){
+/*
+==========================================================
+Buscar
+
+Retorna os dados de uma pessoa da agenda com base no nome.
+==========================================================
+*/
+
+void Buscar( const void* pBuffer, const char nome[10] ){
 
     void* p = pBuffer;
     p = p + sizeof(int);
     int ctrl = 0;
 
-    for( int i=1; i <= *(int*)pBuffer; i++){
+    for ( int i=1; i <= *(int*)pBuffer; i++){
 
-        if( strcmp( (char*)p, nome ) == 0) {
+        if ( strcmp( (char*)p, nome ) == 0) {
 
             printf("%s\n", (char*)p);
             p = p + NOME;
@@ -174,13 +206,13 @@ void buscar( void* pBuffer, char nome[10] ){
 
             ctrl++;
 
-        } else{
+        } else {
             p = p + PESSOA;
         }
 
     }
-    if( ctrl == 0 ){
-        printf("\npessoa nao encontrada\n");
+    if ( ctrl == 0 ){
+        printf( "\npessoa nao encontrada\n" );
     }
 
 }
