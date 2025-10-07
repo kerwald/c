@@ -6,17 +6,17 @@ Este repositório contém implementações de diversas estruturas de dados clás
 
 O projeto está organizado com as seguintes implementações e soluções:
 
-### 1. Estruturas de Dados
+### 1. estruturas-de-Dados
 
 - **Agenda:** Uma implementação simples de uma agenda de contatos.
 - **Fila (Queue):** Implementação de uma estrutura de dados do tipo FIFO (First-In, First-Out).
 - **Pilha (Stack):** Implementação de uma estrutura de dados do tipo LIFO (Last-In, First-Out).
 
-### 2. Algoritmos Específicos
+### 2. algoritmos-especificos
 
 - **NomeNaMesmaString:** Um programa para manipular e buscar nomes dentro de uma string.
 
-### 3. Exercícios Resolvidos
+### 3. exercicios-resolvidos
 
 - **Programação Descomplicada:** Soluções para os problemas das seguintes listas:
     - Lista 1
